@@ -1,6 +1,9 @@
 import React from "react";
 
-const Navbar = () => {
+interface NavbarProps {
+  toggleSidebarOpen: () => void;
+}
+const Navbar = (props: NavbarProps) => {
   return <div>Navbar</div>;
 };
 

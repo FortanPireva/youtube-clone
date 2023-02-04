@@ -1,6 +1,10 @@
 import React from "react";
 
-const Sidebar = () => {
+interface SidebarProps {
+  isSidebarOpen: boolean;
+}
+
+const Sidebar = (props: SidebarProps) => {
   return <div>Sidebar</div>;
 };
 
