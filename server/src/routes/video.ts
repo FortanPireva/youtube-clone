@@ -4,6 +4,7 @@ import {
   Video,
 } from "../prisma/generated/prisma-client-js";
 import express, { Request, Response } from "express";
+import { VideoWithViews } from "../models/types";
 
 const prisma = new PrismaClient();
 
@@ -22,6 +23,7 @@ export async function getVideoViews(
     views?: number;
   })[]
 ) {
+  let videoWithViews: VideoWithViews[] = [];
   for (const video of videos) {
     const views = await prisma.view.count({
       where: {
@@ -30,9 +32,9 @@ export async function getVideoViews(
         },
       },
     });
-    video.views = views;
+    videoWithViews.push({ ...video, views });
   }
-  return videos;
+  return videoWithViews;
 }
 
 async function getRecommendedVideos(req: Request, res: Response) {
@@ -65,6 +67,10 @@ async function getTrendingVideos(req: Request, res: Response) {
     return res.status(200).json({ videos });
   }
 
-  videos = await getVideoViews(videos);
-  return res.status(200).json({ videos });
+  let videoWithViews = await getVideoViews(videos);
+  videoWithViews.sort((a, b) => b.views - a.views);
+
+  res.status(200).json({ videos });
 }
+
+export default getVideoRoutes;
