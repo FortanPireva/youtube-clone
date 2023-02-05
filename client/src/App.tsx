@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import MobileNavbar from "./components/MobileNavbar";
 import Container from "./styles/Container";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import WatchVideo from "./pages/WatchVideo";
 import Channel from "./pages/Channel";
@@ -24,7 +24,7 @@ function App() {
   const toggleSidebarOpen = () => setSidebarOpen(!isSidebarOpen);
 
   return (
-    <>
+    <BrowserRouter>
       <Navbar toggleSidebarOpen={toggleSidebarOpen} />
       <Sidebar isSidebarOpen={isSidebarOpen} />
       <MobileNavbar />
@@ -43,7 +43,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
-    </>
+    </BrowserRouter>
   );
 }
 
